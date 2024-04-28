@@ -1,0 +1,15 @@
+SELECT company_name,
+--this will be the PTO per year by company--
+(CASE 
+WHEN paid_time_off_days>20 THEN "More than 20 days/yr"
+WHEN paid_time_off_days<20 THEN "Less than 20 days/yr"
+ELSE " At least 20 days/yr"
+END) AS "PTO",
+--this will be the maternity leave per year by company--
+(CASE
+WHEN maternity_leave_weeks>=10 THEN "at least 10 wks/yr"
+WHEN maternity_leave_weeks>11 THEN "more than 10 wks/yr"
+ELSE "less than 10 wks/yr"
+END) AS "maternity_leave"
+FROM fortune_companies
+GROUP BY PTO, maternity_leave;
