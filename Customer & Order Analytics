@@ -2,6 +2,8 @@
 SELECT*
 FROM BIT_DB.JanSales;
 
+
+1.) How many orders were placed in January?
 --answer for question #1
 
 SELECT COUNT(orderID)
@@ -9,6 +11,7 @@ FROM BIT_DB.JanSales
 WHERE length(orderID) = 6
 AND orderID <> 'Order ID';
 
+2.) How many of those orders were for an iPhone?
 --answer for question #2
 
 SELECT COUNT(orderID)
@@ -17,7 +20,7 @@ WHERE length(orderID) = 6
 AND orderID <> 'Order ID'
 AND Product='iPhone';
 
---tables used for question #3,#6
+--tables used for question #3,#6,#8
 
 SELECT*
 FROM BIT_DB.FebSales
@@ -25,6 +28,8 @@ FROM BIT_DB.FebSales
 SELECT*
 FROM BIT_DB.customers
 
+
+3.) Select the customer account numbers for all the orders that were placed in February.
 --answer for question #3
 
 SELECT distinct cust.acctnum
@@ -34,6 +39,8 @@ ON cust.order_id=feb.orderID
 WHERE length(orderid)=6
 AND orderid<>'Order ID';
 
+4.) Which product was the cheapest one sold in January, and what was the price?
+
 --answer for question #4
 
 SELECT DISTINCT Product, price
@@ -41,11 +48,15 @@ FROM BIT_DB.JanSales
 ORDER BY price ASC
 LIMIT 1;
 
+5.) What is the total revenue for each product sold in January?
+
 --answer for question #5
 
 SELECT DISTINCT Product, SUM(Quantity)*price AS revenue
 FROM BIT_DB.JanSales
 GROUP BY Product;
+
+6.) Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
 
 --answer for question #6
 
@@ -53,6 +64,8 @@ SELECT DISTINCT Product, SUM(Quantity), SUM(Quantity)*price AS revenue
 FROM BIT_DB.FebSales
 WHERE location='548 Lincoln St, Seattle, WA 98101'
 GROUP BY Product;
+
+7.) How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
 
 --answer for question #7
 
@@ -63,3 +76,12 @@ ON feb.orderID=cust.order_id
 WHERE feb.Quantity>2
 AND length(orderID)=6
 AND orderID<> 'Order ID';
+
+8.) List all the products sold in Los Angeles in February, and include how many of each were sold.
+
+--answer for question #8
+
+SELECT Product, SUM(quantity)
+FROM BIT_DB.FebSales
+WHERE location like '%Los Angeles%'
+GROUP BY Product;
